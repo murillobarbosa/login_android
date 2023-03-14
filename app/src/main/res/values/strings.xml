@@ -4,10 +4,11 @@
     <string name="description_title_login">Please sign in to continue.</string>
     <string name="button_login">SIGN IN</string>
     <string name="new_account">Don’t have an account?</string>
-    <string name="title_sing_up">Sing Up</string>
-    <string name="description_new_account">Create a new account</string>
+    <string name="title_sing_up">Sign Up</string>
+    <string name="create_account">Create a new account</string>
     <string name="your_age">Over 18?</string>
     <string name="button_new_account">CREATE ACCOUNT</string>
     <string name="existing_account">Already have an account?</string>
+    <string name="title_activity_sign_up2">SignUpActivity2</string>
 
 </resources>
