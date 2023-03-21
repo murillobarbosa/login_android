@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +28,7 @@ class SignUpActivity2 : ComponentActivity() {
         setContent {
             LoginTheme {
                 // A surface container using the 'background' color from the theme
+                val context = LocalContext.current
                 Surface(
                     modifier = Modifier.fillMaxSize(),
 
@@ -145,7 +147,8 @@ class SignUpActivity2 : ComponentActivity() {
                           Checkbox(checked = false, onCheckedChange = {""},
                               modifier = Modifier
                                   .width(27.dp)
-                                  .height(27.dp).padding(start = 49.dp)
+                                  .height(27.dp)
+                                  .padding(start = 49.dp)
 
                           )
                           Text(text = stringResource(id = R.string.your_age), modifier = Modifier.padding(start =  40.dp),
@@ -181,7 +184,12 @@ class SignUpActivity2 : ComponentActivity() {
                           Text(text = stringResource(id = R.string.new_account),Modifier.padding(top = 15.dp),
                               fontSize = 12.sp, fontWeight = FontWeight.Light, color = Color(160, 156, 156)
                           )
-                          Text(text = stringResource(id = R.string.button_login),Modifier.padding(end = 50.dp, start = 10.dp, top = 15.dp),
+                          Text(text = stringResource(id = R.string.button_login),Modifier.padding(end = 50.dp, start = 10.dp, top = 15.dp)
+                              .clickable {
+                                  val intent = Intent(context, HomeActivity::class.java)
+                                  context.startActivity(intent)
+                          },
+
                               fontSize = 12.sp, fontWeight = FontWeight.Light, color = Color(207, 6, 240)
 
 

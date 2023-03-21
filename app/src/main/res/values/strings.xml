@@ -10,5 +10,11 @@
     <string name="button_new_account">CREATE ACCOUNT</string>
     <string name="existing_account">Already have an account?</string>
     <string name="title_activity_sign_up2">SignUpActivity2</string>
+    <string name="title_activity_home">HomeActivity</string>
+
+    <string name="profile_name">Susanna Hoffs</string>
+    <string name="rest_of_location">You`re in Paris </string>
+
+
 
 </resources>

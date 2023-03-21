@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
             LoginTheme {
                 // A surface container using the 'background' color from the theme
                 val context = LocalContext.current
+
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
