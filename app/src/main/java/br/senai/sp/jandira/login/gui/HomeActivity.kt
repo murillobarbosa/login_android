@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.login
+package br.senai.sp.jandira.login.gui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
