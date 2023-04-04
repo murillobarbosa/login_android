@@ -2,6 +2,7 @@ package br.senai.sp.jandira.login.gui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -27,11 +28,25 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.jandira.login.R
+import br.senai.sp.jandira.login.model.User
+import br.senai.sp.jandira.login.repository.UserRepository
 import br.senai.sp.jandira.login.ui.theme.LoginTheme
 
 class SignUpActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val user = User(
+            userName = "Maria da Silva",
+            email = "maria@terra.com.br",
+            password = "123456",
+            phone = "(11)99999-9999",
+            isOver18 = true
+        )
+        val userRep = UserRepository(this)
+        val id = userRep.save(user)
+
+        Toast.makeText(this, "$id", Toast.LENGTH_LONG).show()
         setContent {
             LoginTheme {
                 // A surface container using the 'background' color from the theme
@@ -78,19 +93,15 @@ class SignUpActivity2 : ComponentActivity() {
 
                       Spacer(modifier = Modifier.height(20.dp))
 
-                      Box(modifier = Modifier.size(100.dp),
-                        contentAlignment = Alignment.Center
-
-                          ) {
-                          Card(
-                              modifier = Modifier.size(100.dp),
-                                shape = CircleShape,
-                              backgroundColor = Color(232,2232,232,232)
-
-                              ) {
+                      Box(modifier = Modifier.size(100.dp)) {
+                          Card(modifier = Modifier
+                              .size(100.dp),
+                              shape = CircleShape,
+                              backgroundColor = Color(232,232,232,255)) {
+                              Image(painter = painterResource(id = R.drawable.user1), contentDescription =null
+                              )
 
                           }
-                          Image(imageVector = Icons.Default.Place, contentDescription = null, modifier = Modifier.align(Alignment.BottomEnd))
 
                       }
 
