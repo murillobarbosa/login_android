@@ -1,7 +1,12 @@
 package br.senai.sp.jandira.login.gui
 
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.provider.ContactsContract.CommonDataKinds.Phone
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,12 +16,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,6 +30,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,26 +39,39 @@ import br.senai.sp.jandira.login.R
 import br.senai.sp.jandira.login.model.User
 import br.senai.sp.jandira.login.repository.UserRepository
 import br.senai.sp.jandira.login.ui.theme.LoginTheme
+import java.net.PasswordAuthentication
 
 class SignUpActivity2 : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val user = User(
-            userName = "Maria da Silva",
-            email = "maria@terra.com.br",
-            password = "123456",
-            phone = "(11)99999-9999",
-            isOver18 = true
-        )
-        val userRep = UserRepository(this)
-        val id = userRep.save(user)
-
-        Toast.makeText(this, "$id", Toast.LENGTH_LONG).show()
         setContent {
             LoginTheme {
+
+                var photUrl by remember {
+                    mutableStateOf<Uri?>(null)
+                }
                 // A surface container using the 'background' color from the theme
                 var scrollState = rememberScrollState()
+
+                var userNameState by rememberSaveable {
+                    mutableStateOf("")
+                }
+
+                var phoneState by remember {
+                    mutableStateOf("")
+                }
+
+                var passwordState by remember {
+                    mutableStateOf("")
+                }
+
+                var emailState by remember {
+                    mutableStateOf("")
+                }
+
+                var over18State by remember {
+                    mutableStateOf(false)
+                }
 
                 val context = LocalContext.current
                 Surface(
@@ -93,11 +114,16 @@ class SignUpActivity2 : ComponentActivity() {
 
                       Spacer(modifier = Modifier.height(20.dp))
 
-                      Box(modifier = Modifier.size(100.dp)) {
+                      Box(modifier = Modifier
+                          .size(80.dp)
+                          .align(alignment = Alignment.CenterHorizontally)) {
                           Card(modifier = Modifier
-                              .size(100.dp),
+                              .size(100.dp)
+                              .align(alignment = Alignment.BottomCenter)
+                              .size(50.dp),
                               shape = CircleShape,
-                              backgroundColor = Color(232,232,232,255)) {
+                              backgroundColor = Color(232,232,232,255),
+                              ) {
                               Image(painter = painterResource(id = R.drawable.user1), contentDescription =null
                               )
 
@@ -116,32 +142,10 @@ class SignUpActivity2 : ComponentActivity() {
                               .height(height = 335.dp)
                               .verticalScroll(rememberScrollState())) {
                               //////////////////
-                              OutlinedTextField(value = "", onValueChange ={""},
+                              OutlinedTextField(value = userNameState, onValueChange ={userNameState = it},
                                   modifier = Modifier
                                       .fillMaxWidth()
                                       .padding(start = 24.dp, end = 20.dp),
-                                  shape = RoundedCornerShape(16.dp),
-                                  leadingIcon = {
-                                      Image(painter = painterResource(id = R.drawable.email), contentDescription = "",
-                                          modifier = Modifier
-                                              .size(30.dp)
-                                              .padding(start = 5.dp)
-
-                                      )
-                                  },
-                                  colors = TextFieldDefaults
-                                      .outlinedTextFieldColors(
-                                          focusedBorderColor = Color(207, 6, 240) ,
-                                          unfocusedBorderColor = Color(207, 6, 240)
-
-                                      )
-
-                              )
-
-                              OutlinedTextField(value = "", onValueChange ={""},
-                                  modifier = Modifier
-                                      .fillMaxWidth()
-                                      .padding(top = 15.dp, start = 24.dp, end = 20.dp),
                                   shape = RoundedCornerShape(16.dp),
                                   leadingIcon = {
                                       Image(painter = painterResource(id = R.drawable.user), contentDescription = "",
@@ -160,11 +164,12 @@ class SignUpActivity2 : ComponentActivity() {
 
                               )
 
-                              OutlinedTextField(value = "", onValueChange ={""},
+                              OutlinedTextField(value = phoneState, onValueChange ={phoneState = it},
                                   modifier = Modifier
                                       .fillMaxWidth()
                                       .padding(top = 15.dp, start = 24.dp, end = 20.dp),
                                   shape = RoundedCornerShape(16.dp),
+                                  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                                   leadingIcon = {
                                       Image(painter = painterResource(id = R.drawable.phone), contentDescription = "",
                                           modifier = Modifier
@@ -182,11 +187,35 @@ class SignUpActivity2 : ComponentActivity() {
 
                               )
 
-                              OutlinedTextField(value = "", onValueChange ={""},
+                              OutlinedTextField(value = emailState, onValueChange ={emailState = it},
                                   modifier = Modifier
                                       .fillMaxWidth()
                                       .padding(top = 15.dp, start = 24.dp, end = 20.dp),
                                   shape = RoundedCornerShape(16.dp),
+                                  keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                                  leadingIcon = {
+                                      Image(painter = painterResource(id = R.drawable.email), contentDescription = "",
+                                          modifier = Modifier
+                                              .size(30.dp)
+                                              .padding(start = 5.dp)
+
+                                      )
+                                  },
+                                  colors = TextFieldDefaults
+                                      .outlinedTextFieldColors(
+                                          focusedBorderColor = Color(207, 6, 240) ,
+                                          unfocusedBorderColor = Color(207, 6, 240)
+
+                                      )
+
+                              )
+
+                              OutlinedTextField(value = passwordState, onValueChange ={passwordState = it},
+                                  modifier = Modifier
+                                      .fillMaxWidth()
+                                      .padding(top = 15.dp, start = 24.dp, end = 20.dp),
+                                  shape = RoundedCornerShape(16.dp),
+                                  visualTransformation = PasswordVisualTransformation(),
                                   leadingIcon = {
                                       Image(painter = painterResource(id = R.drawable.password), contentDescription = "",
                                           modifier = Modifier
@@ -210,7 +239,9 @@ class SignUpActivity2 : ComponentActivity() {
                                   verticalAlignment = Alignment.CenterVertically
 
                               ) {
-                                  Checkbox(checked = false, onCheckedChange = {},
+                                  Checkbox(checked = over18State, onCheckedChange = {
+                                        checked -> over18State = checked
+                                  },
                                       modifier = Modifier
                                           .width(27.dp)
                                           .height(27.dp)
@@ -230,7 +261,17 @@ class SignUpActivity2 : ComponentActivity() {
                                       .padding(top = 0.dp),
                                   horizontalAlignment = Alignment.CenterHorizontally
                               ) {
-                                  Button(onClick = {},
+                                  Button(onClick = {
+                                      saveUser(
+                                          userNameState,
+                                          phoneState,
+                                          emailState,
+                                          passwordState,
+                                          over18State,
+                                          context
+
+                                      )
+                                  },
                                       modifier = Modifier
                                           .width(327.dp)
                                           .height(48.dp)
@@ -295,7 +336,45 @@ class SignUpActivity2 : ComponentActivity() {
             }
         }
     }
+
+    private fun saveUser(
+        userName: String,
+        phone: String,
+        email: String,
+        password: String,
+        isOver18: Boolean,
+        context: Context
+    ) {
+
+        // Criando um objeto User
+        val newUser = User(
+            id = 0,
+            userName = userName,
+            phone = phone,
+            email = email,
+            password = password,
+            isOver18 = isOver18
+        )
+
+        // Criando uma instância do repositório
+        val userRepository = UserRepository(context)
+
+        // Verificar se o usuário já existe
+        val user = userRepository.findUserByEmail(email)
+        Log.i("ds3m", "${user.toString()}")
+
+
+//
+        // Salvar o usúario
+        if (user == null) {
+            val id = userRepository.save(newUser)
+            Toast.makeText(context, "Created User #$id", Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
 }
+
 
 @Composable
 fun Greeting2(name: String) {

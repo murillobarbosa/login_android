@@ -10,5 +10,13 @@ class UserRepository(context: Context) {
     fun save(user: User): Long{
         return db.userDao().save(user)
     }
+    // Responsavel por encontrar um usuário por e-mail
+    fun findUserByEmail(email: String): User {
+        return db.userDao().findUserByEmail(email)
+    }
+    // Responsavel pela autenticação do Úsuario
+    fun authenticate(email: String, password: String): User{
+        return db.userDao().authenticate(email, password)
+    }
 
 }
