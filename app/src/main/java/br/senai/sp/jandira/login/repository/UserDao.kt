@@ -15,4 +15,5 @@ interface UserDao {
     fun authenticate(email: String, pass: String): User
     @Query("SELECT * FROM tbl_user WHERE email = :email")
     fun findUserByEmail(email: String): User
+
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import br.senai.sp.jandira.login.model.User
 import br.senai.sp.jandira.login.repository.UserDao
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class], version = 2)
 abstract class TripDb : RoomDatabase() {
     abstract fun userDao(): UserDao
 
@@ -19,7 +19,7 @@ abstract class TripDb : RoomDatabase() {
                     .databaseBuilder(
                         context, TripDb::class.java,
                         "db_trip"
-                    ).allowMainThreadQueries().build()
+                    ).allowMainThreadQueries().fallbackToDestructiveMigration().build()
             }
             return instanceDb
         }

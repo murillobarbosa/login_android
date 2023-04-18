@@ -1,5 +1,6 @@
 package br.senai.sp.jandira.login.model
 
+import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Email
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -12,5 +13,6 @@ data class User(
     var email: String = "",
     var password: String = "",
     var phone: String = "",
-    @ColumnInfo(name = "is_over_18") var isOver18: Boolean = false
+    @ColumnInfo(name = "is_over_18") var isOver18: Boolean = false,
+    @ColumnInfo(name = "profile_photo") var profilePhoto: String? = ""
 )

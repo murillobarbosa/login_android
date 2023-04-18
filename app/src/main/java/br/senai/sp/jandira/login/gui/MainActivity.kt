@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        Column (
+                        Column(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.End
                         ) {
@@ -69,31 +69,46 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxWidth(),
                             horizontalAlignment = Alignment.Start,
                         ) {
-                            Text(text = stringResource(id = R.string.title_login),Modifier.padding(start = 20.dp),
-                                fontSize = 40.sp, fontWeight = FontWeight.Bold, color = Color(207, 6, 240)
+                            Text(
+                                text = stringResource(id = R.string.title_login),
+                                Modifier.padding(start = 20.dp),
+                                fontSize = 40.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(207, 6, 240)
                             )
 
-                            Text(text = stringResource(id = R.string.description_title_login),Modifier.padding(start = 20.dp),
-                                fontSize = 19.sp, fontWeight = FontWeight.Light, color = Color(160, 156, 156)
+                            Text(
+                                text = stringResource(id = R.string.description_title_login),
+                                Modifier.padding(start = 20.dp),
+                                fontSize = 19.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color(160, 156, 156)
                             )
                         }
 
-                        Column (
+                        Column(
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.Start) {
+                            horizontalAlignment = Alignment.Start
+                        ) {
 
                             OutlinedTextField(
                                 value = emailState,
-                                onValueChange = { emailState = it
+                                onValueChange = {
+                                    emailState = it
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 80.dp, start = 24.dp, end = 20.dp),
                                 shape = RoundedCornerShape(16.dp),
+                                label =
+                                {
+                                    Text(text = stringResource(id = R.string.name_email))
+                                },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                                 leadingIcon = {
-                                    Image(painter = painterResource
-                                        (id = R.drawable.email),
+                                    Image(
+                                        painter = painterResource
+                                            (id = R.drawable.email),
                                         contentDescription = "",
                                         modifier = Modifier
                                             .size(30.dp)
@@ -102,7 +117,7 @@ class MainActivity : ComponentActivity() {
                                 },
                                 colors = TextFieldDefaults
                                     .outlinedTextFieldColors(
-                                        focusedBorderColor = Color(207, 6, 240) ,
+                                        focusedBorderColor = Color(207, 6, 240),
                                         unfocusedBorderColor = Color(207, 6, 240)
 
                                     )
@@ -110,16 +125,22 @@ class MainActivity : ComponentActivity() {
 
                             OutlinedTextField(
                                 value = passwordState,
-                                onValueChange = { passwordState = it
+                                onValueChange = {
+                                    passwordState = it
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(top = 31.dp, start = 24.dp, end = 20.dp),
                                 shape = RoundedCornerShape(16.dp),
+                                label =
+                                {
+                                    Text(text = stringResource(id = R.string.name_password))
+                                },
                                 visualTransformation = PasswordVisualTransformation(),
                                 leadingIcon = {
-                                    Image(painter = painterResource
-                                        (id = R.drawable.password),
+                                    Image(
+                                        painter = painterResource
+                                            (id = R.drawable.password),
                                         contentDescription = "",
                                         modifier = Modifier
                                             .size(30.dp)
@@ -128,7 +149,7 @@ class MainActivity : ComponentActivity() {
                                 },
                                 colors = TextFieldDefaults
                                     .outlinedTextFieldColors(
-                                        focusedBorderColor = Color(207, 6, 240) ,
+                                        focusedBorderColor = Color(207, 6, 240),
                                         unfocusedBorderColor = Color(207, 6, 240)
 
                                     )
@@ -143,52 +164,64 @@ class MainActivity : ComponentActivity() {
                                 .padding(end = 20.dp),
                             horizontalAlignment = Alignment.End
                         ) {
-                            Button(onClick = {
-                                             authenticate(emailState, passwordState, context)
-                            },
+                            Button(
+                                onClick = {
+                                    authenticate(emailState, passwordState, context)
+                                },
                                 modifier = Modifier
                                     .width(134.dp)
-                                    .height(48.dp)
-                                , colors = ButtonDefaults.buttonColors(Color(207, 6, 244)),
+                                    .height(48.dp),
+                                colors = ButtonDefaults.buttonColors(Color(207, 6, 244)),
                                 shape = RoundedCornerShape(16.dp),
 
                                 ) {
-                                Text(text = stringResource(id = R.string.button_login),
-                                    color = Color.White)
+                                Text(
+                                    text = stringResource(id = R.string.button_login),
+                                    color = Color.White
+                                )
                             }
                         }
-                        Row( modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        )
                         {
-                            Text(text = stringResource(id = R.string.new_account),Modifier.padding(top = 15.dp),
-                                fontSize = 19.sp, fontWeight = FontWeight.Light, color = Color(160, 156, 156)
+                            Text(
+                                text = stringResource(id = R.string.new_account),
+                                Modifier.padding(top = 15.dp),
+                                fontSize = 19.sp,
+                                fontWeight = FontWeight.Light,
+                                color = Color(160, 156, 156)
                             )
-                            Text(text = stringResource(id = R.string.title_sing_up),
+                            Text(
+                                text = stringResource(id = R.string.title_sing_up),
                                 Modifier
                                     .padding(end = 20.dp, start = 10.dp, top = 15.dp)
                                     .clickable {
                                         val intent = Intent(context, SignUpActivity2::class.java)
                                         context.startActivity(intent)
                                     },
-                                fontSize = 19.sp, fontWeight = FontWeight.Bold, color = Color(207, 6, 240)
-
+                                fontSize = 19.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(207, 6, 240)
 
 
                             )
                         }
 
-                        Column (
+                        Column(
                             modifier = Modifier.fillMaxHeight(),
                             verticalArrangement = Arrangement.Bottom
 
                         ) {
-                           BottomShape()
+                            BottomShape()
                         }
                     }
                 }
             }
         }
     }
+
     private fun authenticate(email: String, password: String, context: Context) {
         val userRepository = UserRepository(context)
 
@@ -197,10 +230,13 @@ class MainActivity : ComponentActivity() {
         if (user == null) {
             Toast.makeText(
                 context, "User or password incorrect!",
-                Toast.LENGTH_SHORT)
+                Toast.LENGTH_SHORT
+            )
                 .show()
-        }else{
+        } else {
             val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra("id", user.id)
+            intent.putExtra("name", user.userName)
             context.startActivity(intent)
         }
     }
