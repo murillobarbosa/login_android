@@ -1,4 +1,4 @@
-package br.senai.sp.jandira.login.repository
+package br.senai.sp.jandira.login.dao
 
 import androidx.room.*
 import br.senai.sp.jandira.login.model.User

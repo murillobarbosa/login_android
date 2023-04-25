@@ -13,6 +13,9 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="profile_name">Susanna Hoffs</string>
     <string name="rest_of_location">You`re in Paris </string>
+    <string name="categories">Categories</string>
+    <string name="search">Search your destiny</string>
+    <string name="text_cards">Past Trips</string>
 
 
 
